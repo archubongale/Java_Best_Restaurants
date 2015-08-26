@@ -5,13 +5,22 @@ import java.text.SimpleDateFormat;
 import java.text.ParseException;
 
 public class Cuisines {
+  private int id;
+  private String type;
 
-//
-//   public Patient(String patient_name, int doctor_id, String dob) {
-//     this.patient_name = patient_name;
-//     this.dob = dob;
-//     this.doctor_id = doctor_id;
-//   }
+
+  public Cuisines(int id,String type) {
+    this.id = id;
+    this.type = type;
+  }
+
+  public int getId() {
+    return id;
+  }
+
+  public String getType() {
+    return type;
+  }
 //
 //   @Override
 //   public boolean equals(Object otherPatient) {
