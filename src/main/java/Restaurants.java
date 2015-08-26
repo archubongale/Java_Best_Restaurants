@@ -37,45 +37,49 @@ public class Restaurants {
   }
 
 
- // //    @Override
- //   public boolean equals(Object otherCuisine) {
- //     if (!(otherCuisine instanceof Cuisines)) {
- //       return false;
- //     } else {
- //       Cuisines newCuisine = (Cuisines) otherCuisine;
- //       return this.getId() == newCuisine.getId() && // == for primitive equality
- //              this.getType().equals(newCuisine.getType()); // .equals for object equality
- //     }
- //   }
- //
- //   public static List<Cuisines> all() {
- //   String sql = "SELECT * FROM cuisines";
- //   try(Connection con = DB.sql2o.open()) {
- //     return con.createQuery(sql).executeAndFetch(Cuisines.class);
- //   }
- //  }
- //
- //   public void save() {
- //   try(Connection con = DB.sql2o.open()) {
- //     String sql = "INSERT INTO cuisines (type) VALUES (:type)";
- //     this.id = (int) con.createQuery(sql, true)
- //       .addParameter("type", type)
- //       .executeUpdate()
- //       .getKey();
- //    }
- // }
- //    public static Cuisines find(int id) {
- //    try(Connection con = DB.sql2o.open()) {
- //      String sql = "SELECT * FROM cuisines where id=:id";
- //      Cuisines cuisine = con.createQuery(sql)
- //        .addParameter("id", id)
- //        .executeAndFetchFirst(Cuisines.class);
- //      return cuisine;
- //    }
- //  }
- //
- //   public static Cuisines first() {
- //     return all().get(0);
- //   }
+  @Override
+   public boolean equals(Object otherRestaurant) {
+     if (!(otherRestaurant instanceof Restaurants)) {
+       return false;
+     } else {
+       Restaurants newRestaurant = (Restaurants) otherRestaurant;
+       return this.getId() == newRestaurant.getId() &&
+              this.getAddressId() == newRestaurant.getAddressId() && // == for primitive equality
+              this.getName().equals(newRestaurant.getName()) &&
+              this.getCuisineId() == newRestaurant.getCuisineId() &&
+              this.getPhone().equals(newRestaurant.getPhone()); // .equals for object equality
+     }
+   }
+
+   public static List<Restaurants> all() {
+     String sql = "SELECT * FROM restaurants";
+      try(Connection con = DB.sql2o.open()) {
+        return con.createQuery(sql).executeAndFetch(Restaurants.class);
+      }
+  }
+
+   public void save() {
+   try(Connection con = DB.sql2o.open()) {
+     String sql = "INSERT INTO restaurants (name,phone) VALUES (:name,:phone)";
+     this.id = (int) con.createQuery(sql, true)
+       .addParameter("name", this.name)
+       .addParameter("phone", this.phone)
+       .executeUpdate()
+       .getKey();
+    }
+ }
+    public static Restaurants find(int id) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM restaurants where id=:id";
+      Restaurants restaurant = con.createQuery(sql)
+        .addParameter("id", id)
+        .executeAndFetchFirst(Restaurants.class);
+      return restaurant;
+    }
+  }
+
+   public static Restaurants first() {
+     return all().get(0);
+   }
 
 }
