@@ -5,12 +5,11 @@ import java.text.SimpleDateFormat;
 import java.text.ParseException;
 
 public class Cuisines {
-  private int id;
   private String type;
+  private Integer id;
 
 
-  public Cuisines(int id,String type) {
-    this.id = id;
+  public Cuisines(String type) {
     this.type = type;
   }
 
@@ -21,46 +20,45 @@ public class Cuisines {
   public String getType() {
     return type;
   }
-//
-//   @Override
-//   public boolean equals(Object otherPatient) {
-//     if (!(otherPatient instanceof Patient)) {
-//       return false;
-//     } else {
-//       Patient newPatient = (Patient) otherPatient;
-//       return this.getPatientName().equals(newPatient.getPatientName()) &&
-//              this.getId() == newPatient.getId() &&
-//              this.getDob() == newPatient.getDob() &&
-//              this.getDoctorId() == newPatient.getDoctorId();
-//     }
-//   }
-//
-//   public static List<Patient> all() {
-//   String sql = "SELECT * FROM patients";
-//   try(Connection con = DB.sql2o.open()) {
-//     return con.createQuery(sql).executeAndFetch(Patient.class);
-//   }
-//  }
-//
-//   public void save() {
-//   try(Connection con = DB.sql2o.open()) {
-//     String sql = "INSERT INTO patients (patient_name, doctor_id, dob) VALUES (:patient_name, :doctor_id, :dob)";
-//     this.id = (int) con.createQuery(sql, true)
-//       .addParameter("patient_name", patient_name)
-//       .addParameter("doctor_id", doctor_id)
-//       .addParameter("dob", dob)
-//       .executeUpdate()
-//       .getKey();
-//    }
-// }
-//    public static Patient find(int id) {
-//    try(Connection con = DB.sql2o.open()) {
-//      String sql = "SELECT * FROM patients where id=:id";
-//      Patient patient = con.createQuery(sql)
-//        .addParameter("id", id)
-//        .executeAndFetchFirst(Patient.class);
-//      return patient;
-//    }
-//  }
 
+  @Override
+  public boolean equals(Object otherCuisine) {
+    if (!(otherCuisine instanceof Cuisines)) {
+      return false;
+    } else {
+      Cuisines newCuisine = (Cuisines) otherCuisine;
+      return this.getId() == newCuisine.getId() && // == for primitive equality
+             this.getType().equals(newCuisine.getType()); // .equals for object equality
+    }
+  }
+
+  public static List<Cuisines> all() {
+  String sql = "SELECT * FROM cuisines";
+  try(Connection con = DB.sql2o.open()) {
+    return con.createQuery(sql).executeAndFetch(Cuisines.class);
+  }
+ }
+
+  public void save() {
+  try(Connection con = DB.sql2o.open()) {
+    String sql = "INSERT INTO cuisines (type) VALUES (:type)";
+    this.id = (int) con.createQuery(sql, true)
+      .addParameter("type", type)
+      .executeUpdate()
+      .getKey();
+   }
+}
+   public static Cuisines find(int id) {
+   try(Connection con = DB.sql2o.open()) {
+     String sql = "SELECT * FROM cuisines where id=:id";
+     Cuisines cuisine = con.createQuery(sql)
+       .addParameter("id", id)
+       .executeAndFetchFirst(Cuisines.class);
+     return cuisine;
+   }
+ }
+
+  public static Cuisines first() {
+    return all().get(0);
+  }
 }
