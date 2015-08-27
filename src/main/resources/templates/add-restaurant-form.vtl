@@ -1,0 +1,29 @@
+<h1 class="text-center">Add a Restaurant</h1>
+<form action="/cuisines/:id" method="post">
+
+  <!--Name-->
+
+    <div class="form-group">
+      <label for="name">Restaurant Name</label>
+      <input type="name" class="form-control" id="name" placeholder="Epicodus Gourmet Cuisine">
+    </div>
+
+  <!--Phone-->
+
+    <div class="form-group">
+      <label for="phone">Phone</label>
+      <input type="text" name="phone" class="form-control" id="phone" placeholder="503-234-1234">
+    </div>
+
+  <!--Cuisine Type-->
+
+    <div class="form-group">
+      <label for="type">Cuisine Type</label>
+      <input type="text" name="type" id="type" class="form-control" placeholder="American">
+      <input id="cuisineId" name="cuisineId" type="hidden" value="$cuisine.getId()">
+    </div>
+
+  <!--Submit-->
+
+  <button class="btn btn-success" type="submit">Add Restaurant</button>
+</form>

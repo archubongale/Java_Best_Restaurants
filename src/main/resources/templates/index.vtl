@@ -1,0 +1,17 @@
+<h1 class="text-center">Cuisine Types</h1>
+
+#if ($cuisine)
+  <ol>
+  #foreach ($cuisine in $cuisines)
+    <h3><li><a href="/cuisines/$cuisine.getId()">$cuisine.getType()</li></a></h3>
+  #end
+  </ol>
+
+  <a class="btn btn-success" href="/restaurants/new"
+    role="button">Add a restaurant</a>
+
+#else
+  <h3>Please add a restaurant to get the list of cuisines!</h3>
+  <a class="btn btn-success" href="/restaurants/new"
+    role="button">Add a restaurant</a>
+#end

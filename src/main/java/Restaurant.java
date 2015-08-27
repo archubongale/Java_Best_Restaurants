@@ -4,22 +4,18 @@ import org.sql2o.*;
 
 public class Restaurant {
   private int id;
-  private int address_id;
   private String name;
   private int cuisine_id;
   private String phone;
 
-  public Restaurant(String name, String phone) {
+  public Restaurant(String name, int cuisine_id, String phone) {
     this.name = name;
     this.phone = phone;
+    this.cuisine_id = cuisine_id;
   }
 
   public int getId() {
     return id;
-  }
-
-  public int getAddressId() {
-    return address_id;
   }
 
   public String getName() {
@@ -42,7 +38,6 @@ public class Restaurant {
      } else {
        Restaurant newRestaurant = (Restaurant) otherRestaurant;
        return this.getId() == newRestaurant.getId() &&
-              this.getAddressId() == newRestaurant.getAddressId() &&
               this.getName().equals(newRestaurant.getName()) &&
               this.getCuisineId() == newRestaurant.getCuisineId() &&
               this.getPhone().equals(newRestaurant.getPhone());
@@ -50,7 +45,7 @@ public class Restaurant {
    }
 
   public static List<Restaurant> all() {
-    String sql = "SELECT * FROM restaurants";
+    String sql = "SELECT * FROM restaurant";
     try(Connection con = DB.sql2o.open()) {
        return con.createQuery(sql).executeAndFetch(Restaurant.class);
     }
@@ -58,7 +53,7 @@ public class Restaurant {
 
    public void save() {
    try(Connection con = DB.sql2o.open()) {
-     String sql = "INSERT INTO restaurants (name,phone) VALUES (:name,:phone)";
+     String sql = "INSERT INTO restaurant (name,phone) VALUES (:name,:phone)";
      this.id = (int) con.createQuery(sql, true)
        .addParameter("name", this.name)
        .addParameter("phone", this.phone)
@@ -68,7 +63,7 @@ public class Restaurant {
  }
     public static Restaurant find(int id) {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "SELECT * FROM restaurants where id=:id";
+      String sql = "SELECT * FROM restaurant where id=:id";
       Restaurant restaurant = con.createQuery(sql)
         .addParameter("id", id)
         .executeAndFetchFirst(Restaurant.class);

@@ -6,58 +6,47 @@ import java.util.ArrayList;
 
 public class App {
   public static void main(String[] args) {
-  // staticFileLocation("/public");
-  // String layout = "templates/layout.vtl";
+      staticFileLocation("/public");
+      String layout = "templates/layout.vtl";
 
-  // get("/", (request, response) -> {
-  //   HashMap<String, Object> model = new HashMap<String, Object>();
-  //   model.put("template", "templates/administrator.vtl");
-  //   return new ModelAndView(model, layout);
-  // }, new VelocityTemplateEngine());
-  //
-  // post("/doctors", (request, response) -> {
-  //   HashMap<String,Object> model = new HashMap<String, Object>();
-  //   //get categories
-  //   String name = request.queryParams("name");
-  //   int specialty_id = Integer.parseInt(request.queryParams("specialty_id"));
-  //   Doctor newDoctor = new Doctor(name, specialty_id);
-  //   newDoctor.save();
-  //
-  //
-  //   //model.put("categories",newCategory);
-  //   model.put("doctors", Doctor.all());
-  //   //put arraylist of categories on page
-  //   model.put("template", "templates/administrator.vtl");
-  //   return new ModelAndView(model, layout);
-  // }, new VelocityTemplateEngine());
-  //
-  // get("/doctors/:id", (request, response) -> {
-  //   HashMap<String, Object> model = new HashMap<String, Object>();
-  //   model.put("doctor", Doctor.find(Integer.parseInt(request.params(":id"))));
-  //
-  //   model.put("doctors", Doctor.all());
-  //   model.put("template", "templates/patient_form.vtl");
-  //
-  //   return new ModelAndView(model, layout);
-  // }, new VelocityTemplateEngine());
-  //
-  // post("/patients", (request, response) -> {
-  //   HashMap<String, Object> model = new HashMap<String, Object>();
-  //
-  //
-  //   String patient_name = request.queryParams("patient_name");
-  //   int doctor_id = Integer.parseInt(request.queryParams("doctor_id"));
-  //   String dob = request.queryParams("dob");
-  //
-  //   Patient newPatient = new Patient(patient_name, doctor_id, dob);
-  //   newPatient.save();
-  //
-  //   model.put("patients",Patient.all());
-  //   model.put("template", "templates/patient_form.vtl");
-  //
-  //   return new ModelAndView(model, layout);
-  // }, new VelocityTemplateEngine());
-  //
-  //
+      get("/", (request, response) -> {
+        HashMap<String, Object> model = new HashMap<String, Object>();
+        model.put("template", "templates/index.vtl");
+        return new ModelAndView(model, layout);
+      }, new VelocityTemplateEngine());
+
+      get("/restaurants/new", (request, response) -> {
+        HashMap<String, Object> model = new HashMap<String, Object>();
+        model.put("template", "templates/add-restaurant-form.vtl");
+        return new ModelAndView(model, layout);
+      }, new VelocityTemplateEngine());
+
+
+      get("/cuisines/:id", (request, response) -> {
+        HashMap<String, Object> model = new HashMap<String, Object>();
+        //model.put("cuisine", Cuisine.find(Integer.parseInt(request.params(":id"))));
+        //model.put("cuisines",Cuisine.all());
+        model.put("template", "templates/restaurants.vtl");
+        return new ModelAndView(model, layout);
+      }, new VelocityTemplateEngine());
+
+      post("/cuisines/:id", (request, response) -> {
+        HashMap<String, Object> model = new HashMap<String, Object>();
+        Cuisine cuisine = Cuisine.find(Integer.parseInt(request.queryParams("cuisine_id")));
+
+        model.put("cuisine", cuisine);
+
+        String name = request.queryParams("name");
+        String phone = request.queryParams("phone");
+        Restaurant newRestaurant = new Restaurant(name,cuisine.getId(),phone);
+        newRestaurant.save();
+
+        model.put("restaurants",Restaurant.all());
+        model.put("template", "templates/restaurants.vtl");
+
+        return new ModelAndView(model, layout);
+      }, new VelocityTemplateEngine());
+
+
     }
 }
