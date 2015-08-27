@@ -2,17 +2,15 @@ import java.util.List;
 import org.sql2o.*;
 
 
-public class Restaurants {
+public class Restaurant {
   private int id;
   private int address_id;
   private String name;
   private int cuisine_id;
   private String phone;
 
-  public Restaurants(int address_id, String name, int cuisine_id, String phone) {
-    this.address_id = address_id;
+  public Restaurant(String name, String phone) {
     this.name = name;
-    this.cuisine_id = cuisine_id;
     this.phone = phone;
   }
 
@@ -39,23 +37,23 @@ public class Restaurants {
 
   @Override
    public boolean equals(Object otherRestaurant) {
-     if (!(otherRestaurant instanceof Restaurants)) {
+     if (!(otherRestaurant instanceof Restaurant)) {
        return false;
      } else {
-       Restaurants newRestaurant = (Restaurants) otherRestaurant;
+       Restaurant newRestaurant = (Restaurant) otherRestaurant;
        return this.getId() == newRestaurant.getId() &&
-              this.getAddressId() == newRestaurant.getAddressId() && // == for primitive equality
+              this.getAddressId() == newRestaurant.getAddressId() &&
               this.getName().equals(newRestaurant.getName()) &&
               this.getCuisineId() == newRestaurant.getCuisineId() &&
-              this.getPhone().equals(newRestaurant.getPhone()); // .equals for object equality
+              this.getPhone().equals(newRestaurant.getPhone());
      }
    }
 
-   public static List<Restaurants> all() {
-     String sql = "SELECT * FROM restaurants";
-      try(Connection con = DB.sql2o.open()) {
-        return con.createQuery(sql).executeAndFetch(Restaurants.class);
-      }
+  public static List<Restaurant> all() {
+    String sql = "SELECT * FROM restaurants";
+    try(Connection con = DB.sql2o.open()) {
+       return con.createQuery(sql).executeAndFetch(Restaurant.class);
+    }
   }
 
    public void save() {
@@ -68,17 +66,17 @@ public class Restaurants {
        .getKey();
     }
  }
-    public static Restaurants find(int id) {
+    public static Restaurant find(int id) {
     try(Connection con = DB.sql2o.open()) {
       String sql = "SELECT * FROM restaurants where id=:id";
-      Restaurants restaurant = con.createQuery(sql)
+      Restaurant restaurant = con.createQuery(sql)
         .addParameter("id", id)
-        .executeAndFetchFirst(Restaurants.class);
+        .executeAndFetchFirst(Restaurant.class);
       return restaurant;
     }
   }
 
-   public static Restaurants first() {
+   public static Restaurant first() {
      return all().get(0);
    }
 
