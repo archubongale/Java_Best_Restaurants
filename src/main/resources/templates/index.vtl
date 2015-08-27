@@ -1,17 +1,13 @@
 <h1 class="text-center">Cuisine Types</h1>
 
-#if ($cuisine)
-  <ol>
+<p>What kind of food do you what to eat today?</p>
+
+  <form action="/cuisines" method="post">
+    <label for="type">Cuisine Type</label>
+    <input id="type" name="type" type="text">
+    <button type="submit" class="btn btn-success">Add Cuisine</button>
+  </form>
+
   #foreach ($cuisine in $cuisines)
     <h3><li><a href="/cuisines/$cuisine.getId()">$cuisine.getType()</li></a></h3>
   #end
-  </ol>
-
-  <a class="btn btn-success" href="/restaurants/new"
-    role="button">Add a restaurant</a>
-
-#else
-  <h3>Please add a restaurant to get the list of cuisines!</h3>
-  <a class="btn btn-success" href="/restaurants/new"
-    role="button">Add a restaurant</a>
-#end
